@@ -1,0 +1,117 @@
+
+
+
+
+
+.button{
+	
+	-fx-background-color: linear-gradient(to top right, darkslategray, gray);
+	-fx-pref-width: 450;
+	-fx-pref-height: 120;
+	-fx-background-radius: 20,10,0,0;
+	-fx-font-size: 45;
+	-fx-font-family: 'cursive';
+	-fx-border-color: black;
+	-fx-border-radius: 20,10,0,0;
+	-fx-arc-height: 100;
+	-fx-arc-width: 200;
+	
+
+}
+
+.button:hover{
+	-fx-background-color: linear-gradient(to top right, gray, lightgray);
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+
+}
+
+.button:pressed{
+	-fx-effect: dropshadow(two-pass-box,black,10,1,4,4); 
+}
+
+#shootemButton{
+	-fx-translate-x: 2015;
+	-fx-translate-y: 735;
+	
+}
+
+#flashCardButton{
+	-fx-translate-x: 2015;
+	-fx-translate-y: 900;
+}
+
+#legoButton{
+	-fx-translate-x: 2015;
+	-fx-translate-y: 1065;
+}
+
+#exitButton{
+	-fx-translate-x: 2015;
+	-fx-translate-y: 1230;
+}
+
+.label{
+	
+	-fx-font-size: 50;
+	-fx-text-fill: red;
+	-fx-effect: dropShadow(one-pass-box, black, 10, 1,1,1);
+}
+
+#moneyLabel{
+
+
+}
+
+#flashcardpane{
+	-fx-background-color: linear-gradient(to top right, black, gray);
+}
+
+#flashcardbox{
+	
+	-fx-background-color: linear-gradient(to top right, white, lightblue);
+	-fx-pref-width: 800;
+	-fx-pref-height: 600;
+	-fx-alignment: top-center;
+	-fx-background-radius: 50,20,0,0;
+}
+
+#titleLabel{
+	-fx-font-size: 55;
+	-fx-font-weight: BOLD;
+}	
+
+#featureLabel{
+	-fx-font-size: 35;
+	-fx-text-fill: yellow;
+	
+}
+
+#backButton{
+	-fx-translate-x: 2015;
+	-fx-translate-y: 1065;
+	-fx-scale-x: .5;
+	-fx-scale-y: .5;
+	
+}
+#showAnswerButton{
+	-fx-translate-x: 900;
+	-fx-translate-y: 1000;
+	-fx-scale-x: .5;
+	-fx-scale-y: .5;
+	
+}
+#shuffleCardButton{
+	-fx-translate-x: 1200;
+	-fx-translate-y: 1000;
+	-fx-scale-x: .5;
+	-fx-scale-y: .5;
+}
+#studyModeButton{
+	-fx-translate-x: 2015;
+	-fx-translate-y: 1200;
+	-fx-scale-x: .5;
+	-fx-scale-y: .5;
+}
+
+
