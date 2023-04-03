@@ -3,6 +3,7 @@ package org.openjfx.MindYourMatterss;
 import gamescenes.FlashCardScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -11,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import scenes.LoadScene;
 
 /**
@@ -18,7 +20,7 @@ import scenes.LoadScene;
  */
 public class App extends Application {
 
-	public static Stage window;
+	public Stage window;
 	private Scene scene;
 	private Parent root;
 	private LoadScene loadScene;
@@ -27,6 +29,7 @@ public class App extends Application {
 	private long startTime = System.nanoTime();
 	private double timer;
 	private FlashCardScene flashCardScene;
+	private Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
 	@Override
 	public void start(Stage stage) {
@@ -36,8 +39,12 @@ public class App extends Application {
 		window.getIcons().add(icon);
 		window.setFullScreen(false);
 		window.setMaximized(true);
-		window.setWidth(Screen.getPrimary().getBounds().getWidth());
-		window.setHeight(Screen.getPrimary().getBounds().getHeight());
+		window.initStyle(StageStyle.DECORATED);
+		window.setX(bounds.getMinX());
+		window.setY(bounds.getMinY());
+		window.setWidth(bounds.getWidth());
+		window.setHeight(bounds.getHeight());
+		window.setMaxWidth(bounds.getWidth()*2);
 		window.setFullScreenExitHint("");
 		window.setTitle("MindYourMatters v0.01");
 		root = new Group();
