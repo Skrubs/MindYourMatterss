@@ -34,7 +34,7 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) {
 		this.window = stage;
-
+		//Changed
 		icon = new Image(getClass().getResource("/images/icon.png").toExternalForm());
 		window.getIcons().add(icon);
 		window.setFullScreen(false);
