@@ -100,7 +100,8 @@ public class FlashCardScene {
 
 		// Button Action
 		showAnswerButton.setOnAction(e -> {
-
+			
+			flashCardList.get(cardNumber).showAnswer();
 		});
 
 		shuffleCardButton.setOnAction(e -> {

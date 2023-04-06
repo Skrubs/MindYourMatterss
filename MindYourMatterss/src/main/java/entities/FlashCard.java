@@ -19,10 +19,12 @@ public class FlashCard extends GameObject {
 	private VBox vBox;
 	private Label titleLabel;
 	private Label featureLabel;
+	private ArrayList<Label> labelList = new ArrayList<>();
+	
 	
 	
 	/**
-	 * Contrcutor with x and y as parameters
+	 * Constructor with x and y as parameters
 	 * @param x
 	 * @param y
 	 */
@@ -49,6 +51,23 @@ public class FlashCard extends GameObject {
 			featureLabel = new Label(feature);
 				featureLabel.setId("featureLabel");
 			vBox.getChildren().addAll(titleLabel, featureLabel);
+			for(String s : benefits) {
+				labelList.add(new Label("s"));
+				System.out.println(s);
+			}
+			
+		
+	}
+	
+	
+	
+	public void showAnswer(){
+			
+		for(Label l : labelList) {
+			l.setId("lab");
+			vBox.getChildren().add(l);
+		}
+		
 		
 	}
 	
