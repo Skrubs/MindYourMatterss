@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Benefits.Advancement;
 import Benefits.Entitlements;
 import Benefits.Money;
 import entities.FlashCard;
@@ -135,6 +136,11 @@ public class FlashCardScene {
 			flashCardList.add(new FlashCard(cardLayoutX, cardLayoutY, m.getEntitlementName(), m.getFeatureName(),
 					m.getNumOfBenefits(), m.getBenefits()));
 		}
+			for (Advancement a : entitlements.getAdvancement()) {
+			flashCardList.add(new FlashCard(cardLayoutX, cardLayoutY, a.getEntitlementName(), a.getFeatureName(),
+					a.getNumOfBenefits(), a.getBenefits()));
+			}
+			
 
 	}
 

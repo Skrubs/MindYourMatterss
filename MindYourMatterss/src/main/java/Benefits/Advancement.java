@@ -8,6 +8,7 @@ public abstract class Advancement {
 	protected ArrayList<String> benefits;
 	protected String featureName;
 	protected String entitlementName = "Advancement";
+	protected int numOfBenefits = 3;
 	
 	public Advancement(String featureName) {
 		this.featureName = featureName;
@@ -27,6 +28,10 @@ public abstract class Advancement {
 	
 	public String getEntitlementName() {
 		return entitlementName;
+	}
+	
+	public int getNumOfBenefits() {
+		return numOfBenefits;
 	}
 
 }
