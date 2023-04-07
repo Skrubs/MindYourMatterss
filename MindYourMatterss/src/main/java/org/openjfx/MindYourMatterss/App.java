@@ -77,16 +77,8 @@ public class App extends Application {
 		});
 		
 		//FLASH CARD GAME BUTTON ACTIONS
-		flashCardScene.getBackButton().setOnAction(e->{
-			scene.setRoot(loadScene.getRoot());
-		});
+	
 
-		loadScene.getFlashCardButton().setOnAction(e -> {
-			scene.setRoot(flashCardScene.getRoot());
-			flashCardScene.getPane().setPrefSize(scene.getWidth(), scene.getHeight());
-			flashCardScene.getCanvas().setWidth(scene.getWidth());
-			flashCardScene.getCanvas().setHeight(scene.getHeight());
-		});
 
 		loadScene.getShootemButton().setOnAction(e -> {
 
@@ -108,10 +100,7 @@ public class App extends Application {
 					loadScene.render();
 				}
 				
-				if(scene.getRoot().equals(flashCardScene.getRoot())) {
-					flashCardScene.update(timer);
-					flashCardScene.render();
-				}
+			
 			
 
 			}
