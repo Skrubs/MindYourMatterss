@@ -1,5 +1,10 @@
 package org.openjfx.MindYourMatterss;
 
+import java.awt.Toolkit;
+
+
+
+
 import gamescenes.FlashCardScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -29,27 +34,23 @@ public class App extends Application {
 	private long startTime = System.nanoTime();
 	private double timer;
 	private FlashCardScene flashCardScene;
-	private Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+	public static double WINDOW_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	public static double WINDOW_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	
 
 	@Override
 	public void start(Stage stage) {
 		this.window = stage;
-		//Changed
+		// Changed
 		icon = new Image(getClass().getResource("/images/icon.png").toExternalForm());
 		window.getIcons().add(icon);
-		window.setFullScreen(false);
 		window.setMaximized(true);
 		window.initStyle(StageStyle.DECORATED);
-		window.setX(bounds.getMinX());
-		window.setY(bounds.getMinY());
-		window.setWidth(bounds.getWidth());
-		window.setHeight(bounds.getHeight());
-		window.setMaxWidth(bounds.getWidth()*2);
-		window.setFullScreenExitHint("");
+
 		window.setTitle("MindYourMatters v0.01");
 		root = new Group();
 		scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		window.setScene(scene);
 
 		loadScene = new LoadScene();
@@ -62,11 +63,11 @@ public class App extends Application {
 		scene.setOnMouseReleased(e -> {
 			scene.setCursor(Cursor.OPEN_HAND);
 		});
-		
+
 		scene.setRoot(loadScene.getRoot());
 		window.show();
-		
-		//LOAD SCENE BUTTON ACTIONS
+
+		// LOAD SCENE BUTTON ACTIONS
 
 		loadScene.getExitButton().setOnAction(e -> {
 			window.close();
@@ -75,14 +76,23 @@ public class App extends Application {
 		loadScene.getLegoButton().setOnAction(e -> {
 
 		});
+
+		loadScene.getFlashCardButton().setOnAction(e -> {
+
+			scene.setRoot(flashCardScene.getRoot());
+		});
 		
-		//FLASH CARD GAME BUTTON ACTIONS
-	
-
-
 		loadScene.getShootemButton().setOnAction(e -> {
 
 		});
+
+		// FLASH CARD GAME BUTTON ACTIONS
+		
+		flashCardScene.getBackButton().setOnAction(e->{
+			scene.setRoot(loadScene.getRoot());
+		});
+
+		
 
 		// animationTimer
 
@@ -95,13 +105,19 @@ public class App extends Application {
 				timer = (int) timer;
 				timer /= 10;
 
-				if(scene.getRoot().equals(loadScene.getRoot())) {
+				if (scene.getRoot().equals(loadScene.getRoot())) {
 					loadScene.update(timer);
 					loadScene.render();
 				}
 				
-			
-			
+				if(scene.getRoot().equals(flashCardScene.getRoot())){
+					
+					flashCardScene.update(timer);
+					flashCardScene.render();
+					
+				}
+				
+				
 
 			}
 		}.start();

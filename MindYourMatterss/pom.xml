@@ -22,6 +22,11 @@
 				<version>20</version>
 				<type>pom</type>
 			</dependency>
+		<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-controls</artifactId>
+				<version>21-ea+5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

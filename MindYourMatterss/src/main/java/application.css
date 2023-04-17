@@ -92,28 +92,24 @@
 }
 
 #backButton{
-	-fx-translate-x: 2015;
-	-fx-translate-y: 1065;
+
 	-fx-scale-x: .5;
 	-fx-scale-y: .5;
 	
 }
 #showAnswerButton{
-	-fx-translate-x: 900;
-	-fx-translate-y: 1000;
+
 	-fx-scale-x: .5;
 	-fx-scale-y: .5;
 	
 }
 #shuffleCardButton{
-	-fx-translate-x: 1200;
-	-fx-translate-y: 1000;
+
 	-fx-scale-x: .5;
 	-fx-scale-y: .5;
 }
 #studyModeButton{
-	-fx-translate-x: 2015;
-	-fx-translate-y: 1200;
+
 	-fx-scale-x: .5;
 	-fx-scale-y: .5;
 }
