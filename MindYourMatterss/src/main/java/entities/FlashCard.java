@@ -2,13 +2,14 @@ package entities;
 
 
 
+import Benefits.Entitlements;
 import javafx.scene.canvas.GraphicsContext;
 
 public class FlashCard extends GameObject {
 	
 	
 	
-	
+	private Entitlements entitlements;
 	
 	
 	/**
@@ -18,10 +19,12 @@ public class FlashCard extends GameObject {
 	 */
 	public FlashCard() {
 		super(0,0);
+		init();
 	}
 	
-
-	
+	private void init() {
+		entitlements = new Entitlements();
+	}
 	
 
 

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import org.openjfx.MindYourMatterss.App;
 
-
 import entities.FlashCard;
+import features.MonthlyIncome;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -103,6 +103,9 @@ public class FlashCardScene {
 	
 		root.getChildren().add(iv);
 		
+	
+		
+			
 	}
 	
 	private void loadCards() {
