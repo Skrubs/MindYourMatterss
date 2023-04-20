@@ -1,11 +1,16 @@
 package Benefits;
 
+import java.util.ArrayList;
+
+import features.MembershipPerks;
 import features.MonthlyIncome;
+import features.PayIncreases;
 
 public abstract class Money {
 	
 	
 	
+	ArrayList<Money> moneyList;
 	
 	
 	public Money() {
@@ -14,27 +19,19 @@ public abstract class Money {
 		
 	}
 	
+	private void init() {
+	
+	}
+	
+	public ArrayList<Money> getMoneyList(){
+		return moneyList;
+	}
+	
 	
 
-	private class PayIncreases{
-		private String featureName = "Pay Increases";
-		private String annualCostOfLivingIncrease = "Annual Cost of living increase";
-		private String promotionIncreases = "Promotion Increase";
-		private String timeInServiceIncrease = "Time In Service increase";
-		private int numOfBenefits = 3;
-		
-	}
+
 	
-	private class MembershipPerks{
-		private String featureName = "Membership Perks";
-		private String vaHomeLoan = "VA home loans";
-		private String baseExchange = "Base Exchange";
-		private String commissary = "Commissary";
-		private String civilianBusinessDiscounts = "Civilian business discounts";
-		private int numOfBenefits = 4;
-		
-		
-	}
+
 	
 	
 
