@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 import org.openjfx.MindYourMatterss.App;
 
+import Benefits.Entitlements;
+import Benefits.Money;
 import entities.FlashCard;
-import features.MonthlyIncome;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -42,12 +43,14 @@ public class FlashCardScene {
 
 	
 	ArrayList<FlashCard> cardPack;
+	Entitlements entitlements;
 	
 	
 	public FlashCardScene() {
 		initialize();
 		loadCards();
-		cardPack = new ArrayList<>();
+		printCards();
+		
 	}
 	
 	private void initialize() {
@@ -103,15 +106,27 @@ public class FlashCardScene {
 	
 		root.getChildren().add(iv);
 		
-	
+		entitlements = new Entitlements();
+		
+		cardPack = new ArrayList<>();
 		
 			
 	}
 	
 	private void loadCards() {
 		
+		for(Money m : entitlements.getMoneyList()) {
+			cardPack.add(new FlashCard(Money.entitlementName, m.getFeatureName(),
+											m.getNumOfBenefits(),m.getBenefits()));
+		}
 		
-		
+	}
+	
+	public void printCards() {
+		for(FlashCard fc : cardPack) {
+			System.out.println("Entitlement: " + fc.getEntitlement() + " " + 
+									"Feature: " + fc.getFeature() + " " + "Benefits: " + fc.getBenefits());
+		}
 	}
 	
 	public void update(double timer) {

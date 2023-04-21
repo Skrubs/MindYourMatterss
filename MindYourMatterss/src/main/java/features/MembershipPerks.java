@@ -6,19 +6,19 @@ import Benefits.Money;
 
 public class MembershipPerks extends Money{
 
-	private String featureName = "Membership Perks";
+	
 	private String vaHomeLoan = "VA home loans";
 	private String baseExchange = "Base Exchange";
 	private String commissary = "Commissary";
 	private String civilianBusinessDiscounts = "Civilian business discounts";
 	private String clothingAllowance = "Clothing Allowance";
-	private int numOfBenefits = 4;
-	private ArrayList<String> benefits = new ArrayList<>();
+
 	
 	
 	
 	
 	public MembershipPerks() {
+		super("Membership Perks", 4);
 		init();
 		
 	}

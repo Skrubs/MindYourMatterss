@@ -7,14 +7,15 @@ import Benefits.Money;
 public class PayIncreases extends Money{
 	
 	
-	private String featureName = "Pay Increases";
+	
 	private String annualCostOfLivingIncrease = "Annual Cost of living increase";
 	private String promotionIncreases = "Promotion Increase";
 	private String timeInServiceIncrease = "Time In Service increase";
-	private int numOfBenefits = 3;
+	
 	private ArrayList<String> benefits = new ArrayList<>();
 	
 	public PayIncreases() {
+		super("Pay Increases", 3);
 		init();
 	}
 	
@@ -36,6 +37,36 @@ public class PayIncreases extends Money{
 	public String getFeatureName() {
 		return featureName;
 	}
+
+	public String getAnnualCostOfLivingIncrease() {
+		return annualCostOfLivingIncrease;
+	}
+
+	public void setAnnualCostOfLivingIncrease(String annualCostOfLivingIncrease) {
+		this.annualCostOfLivingIncrease = annualCostOfLivingIncrease;
+	}
+
+	public String getPromotionIncreases() {
+		return promotionIncreases;
+	}
+
+	public void setPromotionIncreases(String promotionIncreases) {
+		this.promotionIncreases = promotionIncreases;
+	}
+
+	public String getTimeInServiceIncrease() {
+		return timeInServiceIncrease;
+	}
+
+	public void setTimeInServiceIncrease(String timeInServiceIncrease) {
+		this.timeInServiceIncrease = timeInServiceIncrease;
+	}
+
+	public void setBenefits(ArrayList<String> benefits) {
+		this.benefits = benefits;
+	}
+	
+	
 	
 	
 

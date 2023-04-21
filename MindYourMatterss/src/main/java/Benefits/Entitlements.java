@@ -21,6 +21,10 @@ public class Entitlements {
 		moneyList.add(new MembershipPerks());
 	}
 	
+	public ArrayList<Money> getMoneyList(){
+		return moneyList;
+	}
+	
 	
 	
 
