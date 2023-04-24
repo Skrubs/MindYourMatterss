@@ -83,12 +83,13 @@
 #titleLabel{
 	-fx-font-size: 55;
 	-fx-font-weight: BOLD;
+	-fx-effect: dropshadow(two-pass-box,white,10,0,1,1);
 }	
 
 #featureLabel{
 	-fx-font-size: 35;
 	-fx-text-fill: yellow;
-	
+	-fx-effect: dropshadow(two-pass-box,white,10,0,1,1);
 }
 
 #backButton{
@@ -112,6 +113,33 @@
 
 	-fx-scale-x: .5;
 	-fx-scale-y: .5;
+}
+
+#cardPane{
+	-fx-translate-x:350;
+	-fx-translate-y:250;
+	-fx-alignment: top-center;
+	-fx-vgap: 10;
+}
+
+#cardVBox{
+	-fx-alignment: top-center;
+	-fx-min-width: 800;
+	-fx-vgap: 10;
+
+	
+}
+
+#cardHBox{
+	-fx-translate-y: 200;
+	-fx-max-width: 600;
+	-fx-wrap-text: true;
+	-fx-spacing: 20;
+}
+
+#beneLabel{
+	-fx-font-size: 20;
+	-fx-text-fill: white;
 }
 
 

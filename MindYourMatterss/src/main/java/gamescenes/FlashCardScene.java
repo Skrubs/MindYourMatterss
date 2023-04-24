@@ -1,7 +1,7 @@
 package gamescenes;
 
-
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.openjfx.MindYourMatterss.App;
 
@@ -20,131 +20,208 @@ import javafx.scene.paint.Color;
 import scenes.LoadScene;
 import utility.ImageLoader;
 
-
 /*
  * FlashCardScene is the container scene to house all of the FlashCard Game components and controls
  * Class FlashCard will house all game objects
  */
 public class FlashCardScene {
-	
-	
-	
+
 	private Group root;
 	private Canvas canvas;
 	private GraphicsContext gc;
-	
+
 	private Button backButton;
 	private Button shuffleCardsButton;
 	private Button showAnswerButton;
 	private Button toggleGameModeButton;
-	
+
 	private AudioClip clip;
 	private AudioClip clicked;
 
-	
+	private int index = -1;
+	private int previousIndex = -2;
+
+	private boolean isAnswered = false;
+
 	ArrayList<FlashCard> cardPack;
 	Entitlements entitlements;
-	
-	
+
 	public FlashCardScene() {
 		initialize();
 		loadCards();
+		nextCard();
+		showAnswer();
 		printCards();
-		
+
 	}
-	
+
+	/**
+	 * Initializes the flashcardscene containers and components
+	 */
 	private void initialize() {
 		root = new Group();
 		canvas = new Canvas();
-			canvas.setWidth(App.WINDOW_WIDTH);
-			canvas.setHeight(App.WINDOW_HEIGHT);
+		canvas.setWidth(App.WINDOW_WIDTH);
+		canvas.setHeight(App.WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		root.getChildren().add(canvas);
-		
+
 		backButton = new Button("Back");
-			backButton.setId("backButton");
+		backButton.setId("backButton");
 		shuffleCardsButton = new Button("Shuffle Cards");
-			shuffleCardsButton.setId("shuffleCardButton");
+		shuffleCardsButton.setId("shuffleCardButton");
 		showAnswerButton = new Button("Show Answer");
-			showAnswerButton.setId("showAnswerButton");
+		showAnswerButton.setId("showAnswerButton");
 		toggleGameModeButton = new Button("Toggle Game Mode");
-			toggleGameModeButton.setId("studyModeButton");
+		toggleGameModeButton.setId("studyModeButton");
 		VBox vBox = new VBox();
-			vBox.setId("flashCardButtonVBox");
-			vBox.getChildren().addAll(toggleGameModeButton, backButton);
-			vBox.setTranslateX(2015);
-			vBox.setTranslateY(900);
-				root.getChildren().add(vBox);
-				
+		vBox.setId("flashCardButtonVBox");
+		vBox.getChildren().addAll(toggleGameModeButton, backButton);
+		vBox.setTranslateX(2015);
+		vBox.setTranslateY(900);
+		root.getChildren().add(vBox);
+
 		HBox hBox = new HBox();
-			hBox.setId("flashCardHBox");
-			hBox.getChildren().addAll(showAnswerButton, shuffleCardsButton);
-			hBox.setTranslateX(350);
-			hBox.setTranslateY(1000);
-				root.getChildren().add(hBox);
-			
-				
+		hBox.setId("flashCardHBox");
+		hBox.getChildren().addAll(showAnswerButton, shuffleCardsButton);
+		hBox.setTranslateX(350);
+		hBox.setTranslateY(1000);
+		root.getChildren().add(hBox);
+
 		clip = new AudioClip(LoadScene.class.getResource("/sounds/ButtonSound.wav").toExternalForm());
 		clicked = new AudioClip(LoadScene.class.getResource("/sounds/buttonclick.wav").toExternalForm());
-		
-		backButton.setOnMouseEntered(e->{clip.play();});
-		backButton.setOnMousePressed(e->{clicked.play();});
-		
-		shuffleCardsButton.setOnMouseEntered(e->{clip.play();});
-		shuffleCardsButton.setOnMousePressed(e->{clicked.play();});
-		
-		showAnswerButton.setOnMouseEntered(e->{clip.play();});
-		showAnswerButton.setOnMousePressed(e->{clicked.play();});
-		
-		toggleGameModeButton.setOnMouseEntered(e->{clip.play();});
-		toggleGameModeButton.setOnMousePressed(e->{clicked.play();});
-		
+
+		backButton.setOnMouseEntered(e -> {
+			clip.play();
+		});
+		backButton.setOnMousePressed(e -> {
+			clicked.play();
+		});
+
+		shuffleCardsButton.setOnMouseEntered(e -> {
+			clip.play();
+		});
+		shuffleCardsButton.setOnMousePressed(e -> {
+			clicked.play();
+		});
+
+		showAnswerButton.setOnMouseEntered(e -> {
+			clip.play();
+		});
+		showAnswerButton.setOnMousePressed(e -> {
+			clicked.play();
+		});
+
+		toggleGameModeButton.setOnMouseEntered(e -> {
+			clip.play();
+		});
+		toggleGameModeButton.setOnMousePressed(e -> {
+			clicked.play();
+		});
+
 		ImageView iv = new ImageView(ImageLoader.flashCard);
-				
+
 		gc.setFill(Color.BLACK);
-		
-	
+
 		root.getChildren().add(iv);
-		
+
 		entitlements = new Entitlements();
-		
+
 		cardPack = new ArrayList<>();
-		
-			
+
 	}
-	
+
+	/**
+	 * load cardpack
+	 */
 	private void loadCards() {
-		
-		for(Money m : entitlements.getMoneyList()) {
-			cardPack.add(new FlashCard(Money.entitlementName, m.getFeatureName(),
-											m.getNumOfBenefits(),m.getBenefits()));
+
+		for (Money m : entitlements.getMoneyList()) {
+			cardPack.add(
+					new FlashCard(Money.entitlementName, m.getFeatureName(), m.getNumOfBenefits(), m.getBenefits()));
 		}
-		
+
 	}
-	
+
+	/**
+	 * gets the next card
+	 * 
+	 * @return
+	 */
+	private void nextCard() {
+		Random gen = new Random();
+
+		shuffleCardsButton.setOnAction(e -> {
+
+			if (index != -1) {
+				root.getChildren().remove(cardPack.get(index).getPane());
+				cardPack.get(index).removeAnswer();
+			}
+
+			index = gen.nextInt(cardPack.size());
+			if (index == previousIndex) {
+				while (index == previousIndex) {
+					index = gen.nextInt(cardPack.size());
+				}
+			}
+
+			if (!root.getChildren().contains(cardPack.get(index).getPane())) {
+				root.getChildren().add(cardPack.get(index).getPane());
+			}
+
+			previousIndex = index;
+
+		});
+
+	}
+
+	private void showAnswer() {
+
+		showAnswerButton.setOnAction(e -> {
+
+			if (index != -1) {
+
+				isAnswered = true;
+
+				cardPack.get(index).answer(root);
+
+			}
+
+		});
+
+	}
+
+	/**
+	 * print the current cardPack to the console
+	 */
 	public void printCards() {
-		for(FlashCard fc : cardPack) {
-			System.out.println("Entitlement: " + fc.getEntitlement() + " " + 
-									"Feature: " + fc.getFeature() + " " + "Benefits: " + fc.getBenefits());
+		for (FlashCard fc : cardPack) {
+			System.out.println("Entitlement: " + fc.getEntitlement() + " " + "Feature: " + fc.getFeature() + " "
+					+ "Benefits: " + fc.getBenefits());
 		}
 	}
-	
+
+	/**
+	 * update game objects
+	 * 
+	 * @param timer
+	 */
 	public void update(double timer) {
-	
+
 	}
-	
+
+	/**
+	 * render assets
+	 */
 	public void render() {
 		gc.setFill(Color.rgb(153, 153, 51));
-		gc.fillRect(0,0, canvas.getWidth(), canvas.getHeight());
-		
-		
-		
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
 	}
-	
+
 	public Group getRoot() {
 		return root;
 	}
-
 
 	public Canvas getCanvas() {
 		return canvas;
@@ -213,11 +290,5 @@ public class FlashCardScene {
 	public void setRoot(Group root) {
 		this.root = root;
 	}
-	
-	
-	
-	
-	
-
 
 }
