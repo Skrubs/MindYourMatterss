@@ -2,6 +2,18 @@
 
 
 
+#flashCardButtonVBox{
+	
+}
+
+#buttonBox{
+	-fx-vgap: 25;
+	-fx-spacing: 10;
+}
+
+#testPane{
+	-fx-background-color: black;
+}
 
 .button{
 	
@@ -31,24 +43,43 @@
 }
 
 #shootemButton{
-	-fx-translate-x: 2015;
-	-fx-translate-y: 735;
-	
+	-fx-scale-x: .75;
+	-fx-scale-y: .75;
+}
+
+#shootemButton:hover{
+	-fx-scale-x: .85;
+	-fx-scale-y: .85;
 }
 
 #flashCardButton{
-	-fx-translate-x: 2015;
-	-fx-translate-y: 900;
+	-fx-scale-x: .75;
+	-fx-scale-y: .75;
+}
+
+#flashCardButton:hover{
+	-fx-scale-x: .85;
+	-fx-scale-y: .85;
 }
 
 #legoButton{
-	-fx-translate-x: 2015;
-	-fx-translate-y: 1065;
+	-fx-scale-x: .75;
+	-fx-scale-y: .75;
+}
+
+#legoButton:hover{
+	-fx-scale-x: .85;
+	-fx-scale-y: .85;
 }
 
 #exitButton{
-	-fx-translate-x: 2015;
-	-fx-translate-y: 1230;
+	-fx-scale-x: .75;
+	-fx-scale-y: .75;
+}
+
+#exitButton:hover{
+	-fx-scale-x: .85;
+	-fx-scale-y: .85;
 }
 
 .label{
@@ -132,14 +163,19 @@
 
 #cardHBox{
 	-fx-translate-y: 200;
-	-fx-max-width: 600;
+	-fx-max-width: 870;
 	-fx-wrap-text: true;
-	-fx-spacing: 20;
+	-fx-hgap: 35;
+	-fx-spacing: 35;
 }
 
 #beneLabel{
 	-fx-font-size: 20;
+	-fx-max-width: 200;
 	-fx-text-fill: white;
+	-fx-wrap-text: true;
+	-fx-hgap: 20;
+	
 }
 
 

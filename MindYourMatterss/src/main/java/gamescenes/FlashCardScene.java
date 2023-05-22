@@ -5,8 +5,15 @@ import java.util.Random;
 
 import org.openjfx.MindYourMatterss.App;
 
+import Benefits.Advancement;
+import Benefits.Education;
 import Benefits.Entitlements;
 import Benefits.Money;
+import Benefits.Recreation;
+import Benefits.Satisfaction;
+import Benefits.Security;
+import Benefits.Training;
+import Benefits.Travel;
 import entities.FlashCard;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -51,7 +58,7 @@ public class FlashCardScene {
 		loadCards();
 		nextCard();
 		showAnswer();
-		printCards();
+		//printCards();
 
 	}
 
@@ -77,15 +84,16 @@ public class FlashCardScene {
 		VBox vBox = new VBox();
 		vBox.setId("flashCardButtonVBox");
 		vBox.getChildren().addAll(toggleGameModeButton, backButton);
-		vBox.setTranslateX(2015);
-		vBox.setTranslateY(900);
+		vBox.setTranslateX(root.getLayoutBounds().getMaxX() - 400);
+		vBox.setTranslateY(root.getLayoutBounds().getHeight() * 0.75);
 		root.getChildren().add(vBox);
+		
 
 		HBox hBox = new HBox();
 		hBox.setId("flashCardHBox");
 		hBox.getChildren().addAll(showAnswerButton, shuffleCardsButton);
-		hBox.setTranslateX(350);
-		hBox.setTranslateY(1000);
+		hBox.setTranslateX(root.getLayoutBounds().getWidth() * 0.18);
+		hBox.setTranslateY(root.getLayoutBounds().getHeight() * 0.85);
 		root.getChildren().add(hBox);
 
 		clip = new AudioClip(LoadScene.class.getResource("/sounds/ButtonSound.wav").toExternalForm());
@@ -128,6 +136,7 @@ public class FlashCardScene {
 		entitlements = new Entitlements();
 
 		cardPack = new ArrayList<>();
+		
 
 	}
 
@@ -137,9 +146,38 @@ public class FlashCardScene {
 	private void loadCards() {
 
 		for (Money m : entitlements.getMoneyList()) {
-			cardPack.add(
-					new FlashCard(Money.entitlementName, m.getFeatureName(), m.getNumOfBenefits(), m.getBenefits()));
+			cardPack.add(new FlashCard(Money.entitlementName, m.getFeatureName(), m.getNumOfBenefits(), m.getBenefits()));
 		}
+		
+		for(Advancement a : entitlements.getAdvancementList()) {
+			cardPack.add(new FlashCard(Advancement.entitlementName, a.getFeatureName(), a.getNumOfBenefits(), a.getBenefits()));
+		}
+		
+		for(Travel t : entitlements.getTravelList()) {
+			cardPack.add(new FlashCard(Travel.entitlementName, t.getFeatureName(), t.getNumOfBenefits(), t.getBenefits()));
+		}
+		
+		for(Training t : entitlements.getTrainingList()) {
+			cardPack.add(new FlashCard(Training.entitlementName, t.getFeatureName(), t.getNumOfBenefits(), t.getBenefits()));
+		}
+		
+		for(Education e : entitlements.getEducationList()) {
+			cardPack.add(new FlashCard(Education.entitlementName, e.getFeatureName(), e.getNumOfBenefits(), e.getBenefits()));
+		}
+		
+		for(Recreation r : entitlements.getRecreationList()) {
+			cardPack.add(new FlashCard(Recreation.entitlementName, r.getFeatureName(), r.getNumOfBenefits(), r.getBenefits()));
+		}
+		
+		for(Satisfaction s : entitlements.getSatisfactionList()) {
+			cardPack.add(new FlashCard(Satisfaction.entitlementName, s.getFeatureName(), s.getNumOfBenefits(), s.getBenefits()));
+		}
+		
+		for(Security e : entitlements.getSecurityList()) {
+			cardPack.add(new FlashCard(Security.entitlementName, e.getFeatureName(), e.getNumOfBenefits(), e.getBenefits()));
+		}
+		
+		
 
 	}
 

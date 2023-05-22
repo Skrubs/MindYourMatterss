@@ -77,14 +77,17 @@ public class Clouds {
 
 	private void velSet() {
 		if(velocity == 0) {
-			velocity = 1;
+			velocity = gen.nextDouble();
 		}
 		
 		this.x -= velocity;
 	}
+	
+
 
 	public void update() {
 		velSet();
+		
 		if (this.x < -400) {
 			this.x = 2700;
 		}

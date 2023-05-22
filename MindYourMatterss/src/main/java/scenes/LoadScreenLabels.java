@@ -5,12 +5,13 @@ import java.awt.Toolkit;
 import javafx.animation.RotateTransition;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 
 public class LoadScreenLabels {
 
-	private double x = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	private double y = -10;
+	private double x = Screen.getPrimary().getVisualBounds().getWidth();
+	private double y = Screen.getPrimary().getVisualBounds().getMinY();
 	private double velocity;
 	private Label label;
 	private double rotateAmount;
@@ -26,7 +27,7 @@ public class LoadScreenLabels {
 	}
 
 	private void initializeVariables(String name) {
-		this.velocity = 2.5;
+		this.velocity = 1;
 		label = new Label(name);
 		label.setRotate(-35);
 		label.setId("moneyLabel");
@@ -36,17 +37,17 @@ public class LoadScreenLabels {
 	}
 
 	public void slide(double timer) {
-		x -= velocity + 1.8;
-		if (y != 600) {
+		x -= velocity * 1.7;
+		if (y != 490) {
 			y += velocity;
 		}
 		label.setTranslateX(x);
 		label.setTranslateY(y);
-		if (y >= 600) {
+		if (y >= 490) {
 			rotateAmount = label.getRotate() - 3;
 			label.setRotate(rotateAmount);
 		}
-		if (x < 500) {
+		if (x < 475) {
 			y += Math.cos(timer * velocity);
 			x -= Math.cos(timer * velocity);
 		}

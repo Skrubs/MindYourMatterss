@@ -1,4 +1,4 @@
-package features;
+package features.MoneyFeatures;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class PayIncreases extends Money{
 	private String promotionIncreases = "Promotion Increase";
 	private String timeInServiceIncrease = "Time In Service increase";
 	
-	private ArrayList<String> benefits = new ArrayList<>();
+	
 	
 	public PayIncreases() {
 		super("Pay Increases", 3);

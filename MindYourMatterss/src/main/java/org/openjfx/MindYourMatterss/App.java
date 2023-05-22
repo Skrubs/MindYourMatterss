@@ -1,9 +1,7 @@
 package org.openjfx.MindYourMatterss;
 
 import java.awt.Toolkit;
-
-
-
+import java.awt.desktop.ScreenSleepEvent;
 
 import gamescenes.FlashCardScene;
 import javafx.animation.AnimationTimer;
@@ -34,8 +32,8 @@ public class App extends Application {
 	private long startTime = System.nanoTime();
 	private double timer;
 	private FlashCardScene flashCardScene;
-	public static double WINDOW_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	public static double WINDOW_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public static double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+	public static double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
 	
 
 	@Override
@@ -46,12 +44,18 @@ public class App extends Application {
 		window.getIcons().add(icon);
 		window.setMaximized(true);
 		window.initStyle(StageStyle.DECORATED);
+		
+		
+		
 
 		window.setTitle("MindYourMatters v0.01");
 		root = new Group();
-		scene = new Scene(root);
+		scene = new Scene(root, 1920, 1080);
+		
+		
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		window.setScene(scene);
+		window.sizeToScene();
 
 		loadScene = new LoadScene();
 		flashCardScene = new FlashCardScene();

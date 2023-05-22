@@ -1,4 +1,4 @@
-package features;
+package features.MoneyFeatures;
 
 import java.util.ArrayList;
 

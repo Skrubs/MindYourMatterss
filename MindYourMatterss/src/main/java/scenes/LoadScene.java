@@ -3,29 +3,42 @@ package scenes;
 
 
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import org.openjfx.MindYourMatterss.App;
+
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
 import utility.ImageLoader;
 
+/**
+ * INITIAL SCENE UPON LOADING APPLICATION.  VISUAL LAYOUT IS USED IN A MIX OF
+ * BOTH IN LINE AND USING JAVAFX CSS.  THE CSS FILE IS CALLED application.css IN THE MAIN
+ * FOLDER
+ * @author barce
+ *
+ */
 public class LoadScene {
 	
 	
-	private Group root;
+	private GridPane root;
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private ImageLoader loadImage;
 	private double width;
 	private double height;
-	private Dimension resolution;
+	private Rectangle2D resolution;
 	private Scale scale;
 	private ArrayList<Clouds> cloudList;
 	private Button shootemButton;
@@ -33,15 +46,18 @@ public class LoadScene {
 	private Button flashCardButton;
 	private Button legoButton;
 	private ArrayList<LoadScreenLabels> entitlements;
+	private Image img = ImageLoader.uiBground;
 	
 	private AudioClip clip;
 	private AudioClip clicked;
 	
 	
-	
+	/**
+	 * CONSTRUCTOR - BASIC
+	 */
 	public LoadScene() {
 		loadImage = new ImageLoader();
-		resolution = Toolkit.getDefaultToolkit().getScreenSize();
+		resolution = Screen.getPrimary().getVisualBounds();
 		width = resolution.getWidth();
 		height = resolution.getHeight();
 		scale = new Scale(width, height,0,0);
@@ -49,21 +65,30 @@ public class LoadScene {
 		entitlements = new ArrayList<>();
 		clip = new AudioClip(LoadScene.class.getResource("/sounds/ButtonSound.wav").toExternalForm());
 		clicked = new AudioClip(LoadScene.class.getResource("/sounds/buttonclick.wav").toExternalForm());
-
+		
 		initializeLoad();
-		
-		
+			
 	}
 	
+	/**
+	 * INITIALIZE OBJECTS
+	 */
 	private void initializeLoad() {
-		root = new Group();
-	
-		
+		root = new GridPane();
+		root.prefWidth(App.WINDOW_WIDTH);
+		root.prefHeight(App.WINDOW_HEIGHT);
+		root.setId("testPane");
+		root.autosize();
 			
+		// INITIALIZE CANVAS FOR LOAD SCENE	
+		
 		canvas = new Canvas();
-		canvas.setWidth(width);
-		canvas.setHeight(height);
+		canvas.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		canvas.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+		
 		gc = canvas.getGraphicsContext2D();
+		
+		// INITIALZE BUTTONS FOR LOAD SCENE
 		
 		shootemButton = new Button("Shoot The Bene!");
 			shootemButton.setOnMouseEntered(e->{ clip.play();});
@@ -82,9 +107,18 @@ public class LoadScene {
 			exitButton.setOnMouseEntered(e->{ clip.play();});
 			exitButton.setOnMousePressed(e->{ clicked.play();});
 			exitButton.setId("exitButton");
-					
-			root.getChildren().addAll(canvas, shootemButton, flashCardButton, 
-								legoButton, exitButton);
+			
+		/**
+		 * vBOX CONTAINER FOR LOADSCENE BUTTONS			
+		 */
+		VBox vbox = new VBox();
+			vbox.getChildren().addAll(shootemButton, flashCardButton, legoButton, exitButton);
+			vbox.setId("buttonBox");		
+			root.getChildren().add(canvas);
+			
+	
+			
+			//LOADS LABELS FOR LOAD SCENE ANIMATION
 		entitlements.add(new LoadScreenLabels("Money"));
 		entitlements.add(new LoadScreenLabels("Advancement"));
 		entitlements.add(new LoadScreenLabels("Training"));
@@ -94,26 +128,59 @@ public class LoadScene {
 		entitlements.add(new LoadScreenLabels("Satisfaction"));
 		entitlements.add(new LoadScreenLabels("Security"));
 		
+		
+		//ADDS CLOUDS FOR LOAD SCENE
 		for(int i = 0; i < 10; i++) {
 			cloudList.add(new Clouds());
 		}
+		Pane pane = new Pane();
+		root.getChildren().addAll(pane, vbox);
+		vbox.setTranslateY(vbox.getParent().getBoundsInLocal().getHeight() - 600);
 		
+		//ADDS LABELS TO BE DISPLAYED FOR THE LOADSCENE
 		for(LoadScreenLabels l : entitlements) {
-			root.getChildren().add(l.getLabel());
+			pane.getChildren().add(l.getLabel());
 		}
+		
+		if(screenSizeIsNot4k()) {
+			gc.scale(0.80, 0.80);
+		}
+		
+		
+		
 		
 	}
 	
+	private boolean screenSizeIsNot4k() {
+		if(Screen.getPrimary().getVisualBounds().getWidth() == 1920) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	/**
+	 * RENDERS OBJECTS TO THE LOAD SCENE
+	 */
+
 	public void render() {
 		
+			
 		gc.drawImage(loadImage.skybackground, 0, 0);
+		
 		for(Clouds c : cloudList) {
 			c.render(gc);
 		}
+		
 		gc.drawImage(loadImage.hillbackground, 0, 0);
+		
 		gc.drawImage(loadImage.uiBground, 0, 0);
 	}
 	
+	/**
+	 * UPDATE OBJECTS IN THE LOAD SCENE
+	 * @param timer
+	 */
 	public void update(double timer) {
 		for(Clouds c: cloudList) {
 			c.update();
@@ -127,11 +194,13 @@ public class LoadScene {
 	}
 	
 
-	public Group getRoot() {
+	// SETTERS AND GETTERS BEYOND THIS POINT
+	
+	public GridPane getRoot() {
 		return root;
 	}
 
-	public void setRoot(Group root) {
+	public void setRoot(GridPane root) {
 		this.root = root;
 	}
 
@@ -176,13 +245,6 @@ public class LoadScene {
 		this.height = height;
 	}
 
-	public Dimension getResolution() {
-		return resolution;
-	}
-
-	public void setResolution(Dimension resolution) {
-		this.resolution = resolution;
-	}
 
 	public Scale getScale() {
 		return scale;
