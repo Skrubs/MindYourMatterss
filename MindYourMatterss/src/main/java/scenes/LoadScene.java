@@ -90,7 +90,7 @@ public class LoadScene {
 		
 		// INITIALZE BUTTONS FOR LOAD SCENE
 		
-		shootemButton = new Button("Shoot The Bene!");
+		shootemButton = new Button("Match the Benefit");
 			shootemButton.setOnMouseEntered(e->{ clip.play();});
 			shootemButton.setOnMousePressed(e->{ clicked.play();});
 			shootemButton.setId("shootemButton");

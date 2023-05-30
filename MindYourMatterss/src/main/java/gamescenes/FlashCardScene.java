@@ -21,9 +21,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import scenes.LoadScene;
 import utility.ImageLoader;
 
@@ -34,6 +36,7 @@ import utility.ImageLoader;
 public class FlashCardScene {
 
 	private Group root;
+	private Pane backGroundPane;
 	private Canvas canvas;
 	private GraphicsContext gc;
 
@@ -49,6 +52,13 @@ public class FlashCardScene {
 	private int previousIndex = -2;
 
 	private boolean isAnswered = false;
+	
+	private Button featureFinderGoButton;
+	
+	ImageView iv;
+	
+	private VBox vBox;
+	private HBox hBox;
 
 	ArrayList<FlashCard> cardPack;
 	Entitlements entitlements;
@@ -58,7 +68,8 @@ public class FlashCardScene {
 		loadCards();
 		nextCard();
 		showAnswer();
-		//printCards();
+		featureFinderMode();
+		// printCards();
 
 	}
 
@@ -67,38 +78,51 @@ public class FlashCardScene {
 	 */
 	private void initialize() {
 		root = new Group();
+		backGroundPane = new Pane();
+		backGroundPane.setPrefSize(Screen.getPrimary().getVisualBounds().getWidth(),
+				Screen.getPrimary().getVisualBounds().getHeight());
+
+		backGroundPane.setId("backGroundPane");
+		root.getChildren().add(backGroundPane);
 		canvas = new Canvas();
 		canvas.setWidth(App.WINDOW_WIDTH);
 		canvas.setHeight(App.WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		root.getChildren().add(canvas);
 
+		/**
+		 * Button Declaration
+		 */
 		backButton = new Button("Back");
 		backButton.setId("backButton");
 		shuffleCardsButton = new Button("Shuffle Cards");
 		shuffleCardsButton.setId("shuffleCardButton");
 		showAnswerButton = new Button("Show Answer");
 		showAnswerButton.setId("showAnswerButton");
-		toggleGameModeButton = new Button("Toggle Game Mode");
+		toggleGameModeButton = new Button("Feature Finder");
 		toggleGameModeButton.setId("studyModeButton");
-		VBox vBox = new VBox();
+
+		// vBox for togglebutton and back button
+		vBox = new VBox();
 		vBox.setId("flashCardButtonVBox");
 		vBox.getChildren().addAll(toggleGameModeButton, backButton);
 		vBox.setTranslateX(root.getLayoutBounds().getMaxX() - 400);
 		vBox.setTranslateY(root.getLayoutBounds().getHeight() * 0.75);
 		root.getChildren().add(vBox);
-		
 
-		HBox hBox = new HBox();
+		// HBox for showanswer and shufflecardsbutton in the flashcardscene
+		hBox = new HBox();
 		hBox.setId("flashCardHBox");
 		hBox.getChildren().addAll(showAnswerButton, shuffleCardsButton);
 		hBox.setTranslateX(root.getLayoutBounds().getWidth() * 0.18);
-		hBox.setTranslateY(root.getLayoutBounds().getHeight() * 0.85);
+		hBox.setTranslateY(root.getLayoutBounds().getHeight() * 0.75);
 		root.getChildren().add(hBox);
 
+		// SOUND CLIPS FOR BOTH MOUSE ENTERING AND CLICKING BUTTONS
 		clip = new AudioClip(LoadScene.class.getResource("/sounds/ButtonSound.wav").toExternalForm());
 		clicked = new AudioClip(LoadScene.class.getResource("/sounds/buttonclick.wav").toExternalForm());
 
+		// SOUND CLIPS IMPLIMENTED ON BUTTONS
 		backButton.setOnMouseEntered(e -> {
 			clip.play();
 		});
@@ -127,7 +151,7 @@ public class FlashCardScene {
 			clicked.play();
 		});
 
-		ImageView iv = new ImageView(ImageLoader.flashCard);
+		iv = new ImageView(ImageLoader.flashCard);
 
 		gc.setFill(Color.BLACK);
 
@@ -136,6 +160,18 @@ public class FlashCardScene {
 		entitlements = new Entitlements();
 
 		cardPack = new ArrayList<>();
+		
+		featureFinderGoButton = new Button("Start");
+		featureFinderGoButton.setScaleX(.85);
+		featureFinderGoButton.setScaleY(.85);
+		featureFinderGoButton.setTranslateX(Screen.getPrimary().getVisualBounds().getWidth()/2 - 375);
+		featureFinderGoButton.setTranslateY(Screen.getPrimary().getVisualBounds().getHeight()- 200);
+		featureFinderGoButton.setOnMouseEntered(e->{
+			clip.play();
+		});
+		featureFinderGoButton.setOnMousePressed(e->{
+			clicked.play();
+		});
 		
 
 	}
@@ -146,38 +182,44 @@ public class FlashCardScene {
 	private void loadCards() {
 
 		for (Money m : entitlements.getMoneyList()) {
-			cardPack.add(new FlashCard(Money.entitlementName, m.getFeatureName(), m.getNumOfBenefits(), m.getBenefits()));
+			cardPack.add(
+					new FlashCard(Money.entitlementName, m.getFeatureName(), m.getNumOfBenefits(), m.getBenefits()));
 		}
-		
-		for(Advancement a : entitlements.getAdvancementList()) {
-			cardPack.add(new FlashCard(Advancement.entitlementName, a.getFeatureName(), a.getNumOfBenefits(), a.getBenefits()));
+
+		for (Advancement a : entitlements.getAdvancementList()) {
+			cardPack.add(new FlashCard(Advancement.entitlementName, a.getFeatureName(), a.getNumOfBenefits(),
+					a.getBenefits()));
 		}
-		
-		for(Travel t : entitlements.getTravelList()) {
-			cardPack.add(new FlashCard(Travel.entitlementName, t.getFeatureName(), t.getNumOfBenefits(), t.getBenefits()));
+
+		for (Travel t : entitlements.getTravelList()) {
+			cardPack.add(
+					new FlashCard(Travel.entitlementName, t.getFeatureName(), t.getNumOfBenefits(), t.getBenefits()));
 		}
-		
-		for(Training t : entitlements.getTrainingList()) {
-			cardPack.add(new FlashCard(Training.entitlementName, t.getFeatureName(), t.getNumOfBenefits(), t.getBenefits()));
+
+		for (Training t : entitlements.getTrainingList()) {
+			cardPack.add(
+					new FlashCard(Training.entitlementName, t.getFeatureName(), t.getNumOfBenefits(), t.getBenefits()));
 		}
-		
-		for(Education e : entitlements.getEducationList()) {
-			cardPack.add(new FlashCard(Education.entitlementName, e.getFeatureName(), e.getNumOfBenefits(), e.getBenefits()));
+
+		for (Education e : entitlements.getEducationList()) {
+			cardPack.add(new FlashCard(Education.entitlementName, e.getFeatureName(), e.getNumOfBenefits(),
+					e.getBenefits()));
 		}
-		
-		for(Recreation r : entitlements.getRecreationList()) {
-			cardPack.add(new FlashCard(Recreation.entitlementName, r.getFeatureName(), r.getNumOfBenefits(), r.getBenefits()));
+
+		for (Recreation r : entitlements.getRecreationList()) {
+			cardPack.add(new FlashCard(Recreation.entitlementName, r.getFeatureName(), r.getNumOfBenefits(),
+					r.getBenefits()));
 		}
-		
-		for(Satisfaction s : entitlements.getSatisfactionList()) {
-			cardPack.add(new FlashCard(Satisfaction.entitlementName, s.getFeatureName(), s.getNumOfBenefits(), s.getBenefits()));
+
+		for (Satisfaction s : entitlements.getSatisfactionList()) {
+			cardPack.add(new FlashCard(Satisfaction.entitlementName, s.getFeatureName(), s.getNumOfBenefits(),
+					s.getBenefits()));
 		}
-		
-		for(Security e : entitlements.getSecurityList()) {
-			cardPack.add(new FlashCard(Security.entitlementName, e.getFeatureName(), e.getNumOfBenefits(), e.getBenefits()));
+
+		for (Security e : entitlements.getSecurityList()) {
+			cardPack.add(
+					new FlashCard(Security.entitlementName, e.getFeatureName(), e.getNumOfBenefits(), e.getBenefits()));
 		}
-		
-		
 
 	}
 
@@ -209,6 +251,10 @@ public class FlashCardScene {
 
 			previousIndex = index;
 
+			if (!showAnswerButton.getText().equals("Show Answer")) {
+				showAnswerButton.setText("Show Answer");
+			}
+
 		});
 
 	}
@@ -223,8 +269,43 @@ public class FlashCardScene {
 
 				cardPack.get(index).answer(root);
 
+				if (showAnswerButton.getText().equals("Show Answer")) {
+					showAnswerButton.setText("Hide Answer");
+				} else if (showAnswerButton.getText().equals("Hide Answer")) {
+					cardPack.get(index).removeAnswer();
+					showAnswerButton.setText("Show Answer");
+				}
+
 			}
 
+		});
+
+	}
+
+	/**
+	 * Called when toggleGameModeButton is hit.  Removes contents from root, and adds new contents for 
+	 * game version
+	 */
+	private void featureFinderMode() {
+
+		toggleGameModeButton.setOnAction(e->{
+			
+			if(toggleGameModeButton.getText().equalsIgnoreCase("Feature Finder")) {
+				if (!root.getChildren().isEmpty()) {
+					root.getChildren().removeAll(root.getChildren());
+				}
+				
+				if(root.getChildren().isEmpty()) {
+					toggleGameModeButton.setText("Learn Mode");
+					root.getChildren().addAll(backGroundPane, iv, vBox, featureFinderGoButton);
+				}
+			}else if(toggleGameModeButton.getText().equalsIgnoreCase("Learn Mode")) {
+				root.getChildren().add(hBox);
+				root.getChildren().remove(featureFinderGoButton);
+				toggleGameModeButton.setText("Feature Finder");
+			}
+			
+			
 		});
 
 	}
@@ -245,15 +326,15 @@ public class FlashCardScene {
 	 * @param timer
 	 */
 	public void update(double timer) {
-
+		System.out.println(timer);
 	}
 
 	/**
 	 * render assets
 	 */
 	public void render() {
-		gc.setFill(Color.rgb(153, 153, 51));
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		// gc.setFill(Color.LIMEGREEN);
+		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 	}
 

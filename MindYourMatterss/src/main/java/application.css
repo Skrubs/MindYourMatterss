@@ -2,6 +2,10 @@
 
 
 
+#backGroundPane{
+	-fx-background-color: linear-gradient(to bottom left, white, rgb(153, 153, 51));
+}
+
 #flashCardButtonVBox{
 	
 }

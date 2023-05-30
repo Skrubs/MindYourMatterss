@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import utility.ImageLoader;
 
 public class Clouds {
@@ -18,7 +19,7 @@ public class Clouds {
 	public Clouds() {
 		imageLoader = new ImageLoader();
 		gen = new Random();
-		velocity = gen.nextInt(3);
+		velocity = gen.nextInt(1);
 		int temp = gen.nextInt(2);
 		if (temp == 0) {
 			img = imageLoader.cloud1;
@@ -32,7 +33,8 @@ public class Clouds {
 
 	public void startingPosition() {
 		y = gen.nextInt(50);
-		x = gen.nextInt(2560);
+		int startX = ((int)Screen.getPrimary().getVisualBounds().getWidth() + 100);
+		x = gen.nextInt(startX);
 	}
 
 	public double getX() {
@@ -89,7 +91,7 @@ public class Clouds {
 		velSet();
 		
 		if (this.x < -400) {
-			this.x = 2700;
+			this.x = Screen.getPrimary().getVisualBounds().getWidth() + 400;
 		}
 	}
 
