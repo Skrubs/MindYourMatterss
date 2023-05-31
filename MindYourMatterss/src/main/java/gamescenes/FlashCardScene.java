@@ -27,6 +27,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import scenes.LoadScene;
+import scenes.StarField;
 import utility.ImageLoader;
 
 /*
@@ -52,16 +53,20 @@ public class FlashCardScene {
 	private int previousIndex = -2;
 
 	private boolean isAnswered = false;
-	
+
 	private Button featureFinderGoButton;
+
+	private StarField starField;
 	
+
 	ImageView iv;
-	
+
 	private VBox vBox;
 	private HBox hBox;
 
 	ArrayList<FlashCard> cardPack;
 	Entitlements entitlements;
+	private boolean starFieldActivate = true;
 
 	public FlashCardScene() {
 		initialize();
@@ -78,12 +83,14 @@ public class FlashCardScene {
 	 */
 	private void initialize() {
 		root = new Group();
-		backGroundPane = new Pane();
-		backGroundPane.setPrefSize(Screen.getPrimary().getVisualBounds().getWidth(),
-				Screen.getPrimary().getVisualBounds().getHeight());
+		/*
+		 * backGroundPane = new Pane();
+		 * backGroundPane.setPrefSize(Screen.getPrimary().getVisualBounds().getWidth(),
+		 * Screen.getPrimary().getVisualBounds().getHeight());
+		 * 
+		 * backGroundPane.setId("backGroundPane");
+		 */
 
-		backGroundPane.setId("backGroundPane");
-		root.getChildren().add(backGroundPane);
 		canvas = new Canvas();
 		canvas.setWidth(App.WINDOW_WIDTH);
 		canvas.setHeight(App.WINDOW_HEIGHT);
@@ -153,26 +160,27 @@ public class FlashCardScene {
 
 		iv = new ImageView(ImageLoader.flashCard);
 
-		gc.setFill(Color.BLACK);
+
 
 		root.getChildren().add(iv);
 
 		entitlements = new Entitlements();
 
 		cardPack = new ArrayList<>();
-		
+
 		featureFinderGoButton = new Button("Start");
 		featureFinderGoButton.setScaleX(.85);
 		featureFinderGoButton.setScaleY(.85);
-		featureFinderGoButton.setTranslateX(Screen.getPrimary().getVisualBounds().getWidth()/2 - 375);
-		featureFinderGoButton.setTranslateY(Screen.getPrimary().getVisualBounds().getHeight()- 200);
-		featureFinderGoButton.setOnMouseEntered(e->{
+		featureFinderGoButton.setTranslateX(Screen.getPrimary().getVisualBounds().getWidth() / 2 - 375);
+		featureFinderGoButton.setTranslateY(Screen.getPrimary().getVisualBounds().getHeight() - 200);
+		featureFinderGoButton.setOnMouseEntered(e -> {
 			clip.play();
 		});
-		featureFinderGoButton.setOnMousePressed(e->{
+		featureFinderGoButton.setOnMousePressed(e -> {
 			clicked.play();
 		});
-		
+
+		starField = new StarField(100, 100);
 
 	}
 
@@ -283,29 +291,31 @@ public class FlashCardScene {
 	}
 
 	/**
-	 * Called when toggleGameModeButton is hit.  Removes contents from root, and adds new contents for 
-	 * game version
+	 * Called when toggleGameModeButton is hit. Removes contents from root, and adds
+	 * new contents for game version
 	 */
 	private void featureFinderMode() {
 
-		toggleGameModeButton.setOnAction(e->{
-			
-			if(toggleGameModeButton.getText().equalsIgnoreCase("Feature Finder")) {
+		toggleGameModeButton.setOnAction(e -> {
+
+			if (toggleGameModeButton.getText().equalsIgnoreCase("Feature Finder")) {
 				if (!root.getChildren().isEmpty()) {
 					root.getChildren().removeAll(root.getChildren());
 				}
-				
-				if(root.getChildren().isEmpty()) {
+
+				if (root.getChildren().isEmpty()) {
 					toggleGameModeButton.setText("Learn Mode");
-					root.getChildren().addAll(backGroundPane, iv, vBox, featureFinderGoButton);
+					root.getChildren().addAll(canvas, iv, vBox, featureFinderGoButton);
+
 				}
-			}else if(toggleGameModeButton.getText().equalsIgnoreCase("Learn Mode")) {
-				root.getChildren().add(hBox);
-				root.getChildren().remove(featureFinderGoButton);
+			} else if (toggleGameModeButton.getText().equalsIgnoreCase("Learn Mode")) {
+				root.getChildren().removeAll(root.getChildren());
+				root.getChildren().addAll(canvas, hBox, iv, vBox);
+
 				toggleGameModeButton.setText("Feature Finder");
+
 			}
-			
-			
+
 		});
 
 	}
@@ -326,7 +336,9 @@ public class FlashCardScene {
 	 * @param timer
 	 */
 	public void update(double timer) {
-		System.out.println(timer);
+		if (starFieldActivate) {
+			starField.update(timer);
+		}
 	}
 
 	/**
@@ -335,6 +347,10 @@ public class FlashCardScene {
 	public void render() {
 		// gc.setFill(Color.LIMEGREEN);
 		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+		if (starFieldActivate) {
+			starField.render(gc);
+		}
 
 	}
 

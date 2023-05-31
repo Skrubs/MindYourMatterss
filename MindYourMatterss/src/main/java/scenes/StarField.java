@@ -7,6 +7,7 @@ import org.openjfx.MindYourMatterss.App;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 
 public class StarField {
 
@@ -60,6 +61,10 @@ public class StarField {
 	}
 	
 	public void render(GraphicsContext gc) {
+		
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
+		
 		for(Star s : staticStarField) {
 			gc.setFill(s.getC());
 			gc.fillOval(s.getX(), s.getY(), s.getSize(), s.getSize());

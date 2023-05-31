@@ -18,6 +18,8 @@ public class ImageLoader {
 	
 	public WritableImage cloud1 = new WritableImage(clouds.getPixelReader(), 500,0,200,200);
 	public WritableImage cloud2 = new WritableImage(clouds.getPixelReader(), 770,0,400,225);
+	
+	public static Image c1 = new Image(ImageLoader.class.getResource("/images/c1.png").toExternalForm());
 
 
 

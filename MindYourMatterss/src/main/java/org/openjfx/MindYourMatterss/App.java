@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,6 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import scenes.LoadScene;
+import utility.ImageLoader;
 
 /**
  * JavaFX App
@@ -60,13 +62,15 @@ public class App extends Application {
 		loadScene = new LoadScene();
 		flashCardScene = new FlashCardScene();
 
-		scene.setCursor(Cursor.OPEN_HAND);
-		scene.setOnMousePressed(e -> {
-			scene.setCursor(Cursor.CLOSED_HAND);
-		});
-		scene.setOnMouseReleased(e -> {
-			scene.setCursor(Cursor.OPEN_HAND);
-		});
+		Cursor c = new ImageCursor(ImageLoader.c1);
+		
+		scene.setCursor(c);
+//		scene.setOnMousePressed(e -> {
+//			scene.setCursor(Cursor.CLOSED_HAND);
+//		});
+//		scene.setOnMouseReleased(e -> {
+//			scene.setCursor(Cursor.OPEN_HAND);
+//		});
 
 		scene.setRoot(loadScene.getRoot());
 		window.show();
