@@ -14,6 +14,7 @@ import Benefits.Satisfaction;
 import Benefits.Security;
 import Benefits.Training;
 import Benefits.Travel;
+import entities.Feature;
 import entities.FlashCard;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -74,6 +75,7 @@ public class FlashCardScene {
 		nextCard();
 		showAnswer();
 		featureFinderMode();
+		goButtonAction();
 		// printCards();
 
 	}
@@ -288,6 +290,16 @@ public class FlashCardScene {
 
 		});
 
+	}
+	
+	private void goButtonAction() {
+		
+		featureFinderGoButton.setOnAction(e->{
+			Feature feature = new Feature("Monthly Income");
+			feature.setTranslateX(800);
+			root.getChildren().add(feature);
+		});
+		
 	}
 
 	/**
