@@ -45,7 +45,7 @@ public class FlashCardScene {
 	private Button backButton;
 	private Button shuffleCardsButton;
 	private Button showAnswerButton;
-	private Button toggleGameModeButton;
+
 
 	private AudioClip clip;
 	private AudioClip clicked;
@@ -58,7 +58,6 @@ public class FlashCardScene {
 	private Button featureFinderGoButton;
 
 	private StarField starField;
-	
 
 	ImageView iv;
 
@@ -74,8 +73,6 @@ public class FlashCardScene {
 		loadCards();
 		nextCard();
 		showAnswer();
-		featureFinderMode();
-		goButtonAction();
 		// printCards();
 
 	}
@@ -108,13 +105,12 @@ public class FlashCardScene {
 		shuffleCardsButton.setId("shuffleCardButton");
 		showAnswerButton = new Button("Show Answer");
 		showAnswerButton.setId("showAnswerButton");
-		toggleGameModeButton = new Button("Feature Finder");
-		toggleGameModeButton.setId("studyModeButton");
+
 
 		// vBox for togglebutton and back button
 		vBox = new VBox();
 		vBox.setId("flashCardButtonVBox");
-		vBox.getChildren().addAll(toggleGameModeButton, backButton);
+		vBox.getChildren().add(backButton);
 		vBox.setTranslateX(root.getLayoutBounds().getMaxX() - 400);
 		vBox.setTranslateY(root.getLayoutBounds().getHeight() * 0.75);
 		root.getChildren().add(vBox);
@@ -153,34 +149,13 @@ public class FlashCardScene {
 			clicked.play();
 		});
 
-		toggleGameModeButton.setOnMouseEntered(e -> {
-			clip.play();
-		});
-		toggleGameModeButton.setOnMousePressed(e -> {
-			clicked.play();
-		});
-
 		iv = new ImageView(ImageLoader.flashCard);
-
-
 
 		root.getChildren().add(iv);
 
 		entitlements = new Entitlements();
 
 		cardPack = new ArrayList<>();
-
-		featureFinderGoButton = new Button("Start");
-		featureFinderGoButton.setScaleX(.85);
-		featureFinderGoButton.setScaleY(.85);
-		featureFinderGoButton.setTranslateX(Screen.getPrimary().getVisualBounds().getWidth() / 2 - 375);
-		featureFinderGoButton.setTranslateY(Screen.getPrimary().getVisualBounds().getHeight() - 200);
-		featureFinderGoButton.setOnMouseEntered(e -> {
-			clip.play();
-		});
-		featureFinderGoButton.setOnMousePressed(e -> {
-			clicked.play();
-		});
 
 		starField = new StarField(100, 100);
 
@@ -291,46 +266,6 @@ public class FlashCardScene {
 		});
 
 	}
-	
-	private void goButtonAction() {
-		
-		featureFinderGoButton.setOnAction(e->{
-			Feature feature = new Feature("Monthly Income");
-			feature.setTranslateX(800);
-			root.getChildren().add(feature);
-		});
-		
-	}
-
-	/**
-	 * Called when toggleGameModeButton is hit. Removes contents from root, and adds
-	 * new contents for game version
-	 */
-	private void featureFinderMode() {
-
-		toggleGameModeButton.setOnAction(e -> {
-
-			if (toggleGameModeButton.getText().equalsIgnoreCase("Feature Finder")) {
-				if (!root.getChildren().isEmpty()) {
-					root.getChildren().removeAll(root.getChildren());
-				}
-
-				if (root.getChildren().isEmpty()) {
-					toggleGameModeButton.setText("Learn Mode");
-					root.getChildren().addAll(canvas, iv, vBox, featureFinderGoButton);
-
-				}
-			} else if (toggleGameModeButton.getText().equalsIgnoreCase("Learn Mode")) {
-				root.getChildren().removeAll(root.getChildren());
-				root.getChildren().addAll(canvas, hBox, iv, vBox);
-
-				toggleGameModeButton.setText("Feature Finder");
-
-			}
-
-		});
-
-	}
 
 	/**
 	 * print the current cardPack to the console
@@ -410,13 +345,6 @@ public class FlashCardScene {
 		this.showAnswerButton = showAnswerButton;
 	}
 
-	public Button getToggleGameModeButton() {
-		return toggleGameModeButton;
-	}
-
-	public void setToggleGameModeButton(Button toggleGameModeButton) {
-		this.toggleGameModeButton = toggleGameModeButton;
-	}
 
 	public AudioClip getClip() {
 		return clip;

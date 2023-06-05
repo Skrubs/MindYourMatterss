@@ -90,7 +90,7 @@ public class App extends Application {
 			scene.setRoot(flashCardScene.getRoot());
 		});
 		
-		loadScene.getShootemButton().setOnAction(e -> {
+		loadScene.beneSaverButton().setOnAction(e -> {
 
 		});
 

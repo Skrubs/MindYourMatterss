@@ -41,7 +41,7 @@ public class LoadScene {
 	private Rectangle2D resolution;
 	private Scale scale;
 	private ArrayList<Clouds> cloudList;
-	private Button shootemButton;
+	private Button beneSaver;
 	private Button exitButton;
 	private Button flashCardButton;
 	private Button legoButton;
@@ -90,10 +90,10 @@ public class LoadScene {
 		
 		// INITIALZE BUTTONS FOR LOAD SCENE
 		
-		shootemButton = new Button("Match the Benefit");
-			shootemButton.setOnMouseEntered(e->{ clip.play();});
-			shootemButton.setOnMousePressed(e->{ clicked.play();});
-			shootemButton.setId("shootemButton");
+		beneSaver = new Button("Benefit Saver");
+			beneSaver.setOnMouseEntered(e->{ clip.play();});
+			beneSaver.setOnMousePressed(e->{ clicked.play();});
+			beneSaver.setId("shootemButton");
 			
 		flashCardButton = new Button("Flash Cards");
 			flashCardButton.setOnMouseEntered(e->{ clip.play();});
@@ -112,7 +112,7 @@ public class LoadScene {
 		 * vBOX CONTAINER FOR LOADSCENE BUTTONS			
 		 */
 		VBox vbox = new VBox();
-			vbox.getChildren().addAll(shootemButton, flashCardButton, legoButton, exitButton);
+			vbox.getChildren().addAll(beneSaver, flashCardButton, legoButton, exitButton);
 			vbox.setId("buttonBox");		
 			root.getChildren().add(canvas);
 			
@@ -262,12 +262,12 @@ public class LoadScene {
 		this.cloudList = cloudList;
 	}
 
-	public Button getShootemButton() {
-		return shootemButton;
+	public Button beneSaverButton() {
+		return beneSaver;
 	}
 
-	public void setShootemButton(Button shootemButton) {
-		this.shootemButton = shootemButton;
+	public void beneSaverButton(Button shootemButton) {
+		this.beneSaver = shootemButton;
 	}
 
 	public Button getExitButton() {
