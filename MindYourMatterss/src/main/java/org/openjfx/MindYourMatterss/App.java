@@ -1,12 +1,9 @@
 package org.openjfx.MindYourMatterss;
 
-import java.awt.Toolkit;
-import java.awt.desktop.ScreenSleepEvent;
-
+import gamescenes.BenefitSaver;
 import gamescenes.FlashCardScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
@@ -29,6 +26,7 @@ public class App extends Application {
 	private Scene scene;
 	private Parent root;
 	private LoadScene loadScene;
+	private BenefitSaver benefitSaver;
 	private Image icon;
 	private MediaPlayer mp;
 	private long startTime = System.nanoTime();
@@ -58,6 +56,8 @@ public class App extends Application {
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		window.setScene(scene);
 		window.sizeToScene();
+		
+		benefitSaver = new BenefitSaver();
 
 		loadScene = new LoadScene();
 		flashCardScene = new FlashCardScene();
@@ -91,7 +91,7 @@ public class App extends Application {
 		});
 		
 		loadScene.beneSaverButton().setOnAction(e -> {
-
+			scene.setRoot(benefitSaver.getRoot());
 		});
 
 		// FLASH CARD GAME BUTTON ACTIONS
@@ -123,6 +123,11 @@ public class App extends Application {
 					flashCardScene.update(timer);
 					flashCardScene.render();
 					
+				}
+				
+				if(scene.getRoot().equals(benefitSaver.getRoot())) {
+					benefitSaver.update(timer);
+					benefitSaver.render();
 				}
 				
 				
