@@ -22,6 +22,7 @@ public class BenefitSaver {
 	private GraphicsContext gc;
 	private Pane pane;
 	private Rectangle2D rectBounds;
+	private double rotSpeed = 1;
 	
 	public BenefitSaver() {
 		init();
@@ -34,14 +35,15 @@ public class BenefitSaver {
 		gc = canvas.getGraphicsContext2D();
 		root.getChildren().add(canvas);
 		pane = new Pane();
-		rectBounds = new Rectangle2D(App.WINDOW_WIDTH/2 - 100, App.WINDOW_HEIGHT/2 - 100,
-							200,200);
+		rectBounds = new Rectangle2D(App.WINDOW_WIDTH/2 - 100, App.WINDOW_HEIGHT/2 - 100,200,200);
 		pane.setTranslateX(rectBounds.getMinX());
 		pane.setTranslateY(rectBounds.getMinY());
+		pane.setPrefSize(200, 200);
 		pane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, null)));
 		root.getChildren().add(pane);
-		
 	
+		
+		
 		
 		
 	}
@@ -49,6 +51,8 @@ public class BenefitSaver {
 	
 	public void update(double timer) {
 		starField.update(timer);
+		rotSpeed += .2;
+		pane.setRotate(rotSpeed);
 	}
 	
 	public void render() {
